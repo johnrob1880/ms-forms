@@ -1,0 +1,18 @@
+{
+    "form.title": "Ejemplo de formulario de varios pasos",
+    "form.description": "Un ejemplo de formulario de varios pasos con soporte de idioma.",
+    "firstname": "Nombre de pila",
+    "firstname.validity.valueMissing": "Por favor, introduzca su nombre de pila.",
+    "firstname.validity.tooShort": "El nombre debe ser de 3 o más caracteres.",
+    "lastname": "Apellido",
+    "email": "Correo electrónico",
+    "age": "Años",
+    "comments": "Comentarios",
+    "actions.next": "Siguiente 🠪",
+    "actions.back": "🠨 Regresa",
+    "actions.finish": "Terminar 🠪",
+    "actions.start-over": "Comenzar de nuevo ⟳",
+    "validity.valueMissing": "Por favor rellene este campo.",
+    "validity.typeMismatch": "",
+    "validity.typeMismatch.email": "Por favor, incluya una '@' en la dirección de correo electrónico."
+}

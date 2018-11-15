@@ -1,0 +1,6 @@
+ms-form-step .ms-form__panel {
+    display: none;
+}
+ms-form-step .ms-form__panel.ms-show {
+    display: block;
+}

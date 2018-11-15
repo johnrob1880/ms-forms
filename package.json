@@ -1,0 +1,31 @@
+{
+  "name": "ms-forms",
+  "version": "1.0.0",
+  "description": "Multi-step form components",
+  "module": "dist/esm/index.js",
+  "main": "dist/index.js",
+  "types": "dist/types/components.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "stencil build",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll"
+  },
+  "dependencies": {
+    "form-serialize": "^0.7.2"
+  },
+  "devDependencies": {
+    "@stencil/core": "~0.15.1",
+    "@stencil/sass": "^0.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnrob1880/ms-forms.git"
+  },
+  "author": "John Robinson<johnrob1880@gmail.com>",
+  "license": "MIT"
+}

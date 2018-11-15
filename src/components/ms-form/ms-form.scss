@@ -1,0 +1,307 @@
+        
+
+ms-form {
+    .ms-form {
+        background: var(--ms-form-background, #ffffff);
+        box-shadow: var(--ms-form-box-shadow, 0 5px 10px rgba(0, 0, 0, .4));
+        border-radius: var(--ms-form-border-radius, 4px);
+        padding: var(--ms-form-padding, 1em);
+
+        .ms-form__header {
+            padding: var(--ms-form-header-padding, 10px);
+            border: var(--ms-form-header-border-size, 3px) var(--ms-form-header-border-style, solid) var(--ms-form-header-border-color, #dcdcdc);
+            background-color: var(--ms-form-header-background-color, #f1f1f1);
+            margin: var(--ms-form-header-margin, 0 0 20px 0);
+            border-radius: var(--ms-form-header-border-radius, 4px);
+        }
+        .ms-form__stages {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            div > label {
+                background: var(--ms-form-label-background, #E6E6E6);
+                color: var(--ms-form-label-text-color, #8C8C8C);
+                border: solid 3px var(--ms-form-label-border-color, #B3B3B3);                
+                border-radius: var(--ms-form-label-border-radius, 50%);
+                cursor: pointer;
+                display: inline-block;
+                font-size: 0;
+                font-weight: 700;
+                height: 25px;
+                line-height: 25px;
+                position: relative;
+                text-align: center;
+                vertical-align: top;
+                width: 25px;
+                z-index: 1;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+        }
+
+        .ms-form__panels {
+            
+            ms-form-step {
+                display: block;
+            }
+            
+            .ms-validation-message {
+                padding: var(--ms-form-error-padding, 0);
+                margin: var(--ms-form-error-margin, 0);
+                color: var(--ms-form-error-text-color, #EB0000);
+                font-weight: 700;
+            }
+
+            p {
+                margin: var(--ms-form-paragaraph-margin, 10px 0);
+            }
+            /**
+            * If a required input has been touched and is valid, it should be white.
+            */
+            .ms-touched:required:valid {
+                border-color: inherit;
+            }
+            
+            .ms-touched:required:invalid {
+                border-color: var(--ms-form-error-border-color, #EB0000);
+            }            
+        }
+
+        .ms-form__panels__actions {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;     
+            
+            .ms-finish-btn {
+                margin-left: var(--ms-form-finish-btn-margin-left, 20px);
+            }
+        }
+
+        .ms-form__results {
+
+            .ms-form__result {
+                display: none;
+                margin: var(--ms-form-result-margin, 1em 0 0);
+                padding: var(--ms-form-result-padding, 1em 0 0);
+                border-top: solid var(--ms-form-result-border-top-size, 1px) var(--ms-form-result-border-top-color, #c0c0c0);
+
+                &.ms-show {
+                    display: block;
+                }
+            }
+        }
+        
+        input[data-step] {
+            display: none;
+        }
+
+        .ms-form__stages label[for].ms-complete, .ms-form__stages label[for].ms-active {
+            border-color: var(--ms-form-label-complete-border-color, #099579);
+        }
+        
+        input[data-step]:checked ~ .ms-form__stages label,
+        input[data-step]:checked ~ .ms-form__stages label[for] ~ label {
+            font-size: 1rem;
+        }
+        
+        input[data-step]:checked ~ .ms-form__stages label:after,
+        input[data-step]:checked ~ .ms-form__stages label[for] ~ label:after {
+            display: inline-block;
+        }
+        
+        .ms-form__progress {
+            display: var(--ms-form-progress-display, block);
+            position: relative;
+            background: var(--ms-form-progres-background-color, #c0c0c0);
+            height: 3px; /* 5px */
+            transform: translateY(-1em); /* -2.75em */            
+            width: 100%;
+
+            > div {
+                height: 100%;
+                background: var(--ms-form-label-complete-border-color, #099579);
+                transition: 0.3s;
+            }
+        }
+
+        input[data-step]:checked ~ .ms-form__progress > div {
+            width: var(--ms-form-progress-width, calc(100% / 1 * 1));
+        }
+
+      
+        /* Custom code for the demo */
+        button,
+        input,
+        select,
+        textarea {
+            font-family: var(--ms-form-font-family, "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif);
+        }
+        
+        a {
+            color: var(--ms-form-link-color, #0cc39f);
+        }
+        
+        h2,
+        h4 {
+            text-align: var(--ms-form-heading-text-align, left);
+            margin: var(--ms-form-heading-margin, 0 0 10px 0);
+        }
+        
+        .ms-form__panels div.ms-form__panel {
+            display: none;
+            border-top: solid var(--ms-form-panel-border-top-size, 1px) var(--ms-form-panel-border-top-color, #c0c0c0);
+            margin: var(--ms-form-panel-margin, 1em 0 0);
+            padding: var(--ms-form-panel-padding, 1em 0 0);
+
+            h2,
+            h4 {
+                text-align: var(--ms-form-label-text-align, left);
+                margin: var(--ms-form-label-margin, 0);
+            }
+
+            &.ms-show {
+                display: block;
+            }
+        }
+
+        .ms-form__stages label[for].ms-complete,
+        .ms-form__stages label[for].ms-active {
+            background-color: var(--ms-form-success-background-color, #0cc39f);
+            color: var(--ms-form-success-text-color, #ffffff);
+        }
+
+        .ms-form__stages label[for].ms-complete.ms-errors {
+            background-color: var(--ms-form-error-background-color, #FFEBEB);
+            color: var(--ms-form-error-text-color, #EB0000);
+            border-color: var(--ms-form-error-border-color, #EB0000);
+        }
+        
+        input[type=text],
+        input[type=number],
+        input[type=email],
+        input[type=tel],
+        input[type=date],
+        input[type=month],
+        input[type=password],
+        select,
+        textarea {
+            box-sizing: border-box;
+            width: var(--ms-form-input-width, 100%);
+            padding: var(--ms-form-input-padding, 12px 20px);
+            margin: var(--ms-form-input-margin, 8px 0);
+            display: inline-block;
+            border: var(--ms-form-input-border-size, 1px) solid var(--ms-form-input-border-color, #ccc);
+            border-radius: var(--ms-form-input-border-radius, 4px);
+        }
+
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 30px white inset;
+        }
+                
+        button {
+            color: var(--ms-form-button-default-color, #4D4D4D);
+            &.ms-primary {
+                background-color: var(--ms-form-button-primary-background, #099579);
+                color: var(--ms-form-button-primary-color, #ffffff);
+            }
+            border: var(--ms-form-button-border, 0);
+            border-radius: var(--ms-form-button-border-radius, 4px);            
+            cursor: pointer;
+            font-weight: var(--ms-form-button-font-weight, 700);
+            margin: var(--ms-form-button-margin, 1em 0 0 0);
+            padding: var(--ms-form-button-padding, .5em 1em);
+        }
+        
+        button:hover {
+            opacity: 0.8;
+        }
+        
+    }
+
+    .ms-description {
+        color: var(--ms-form-description-text-color, #595959);
+    }
+    
+    
+    /* Add this attribute to the element that needs a tooltip */
+    [data-tooltip] {
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
+    }
+    
+    /* Hide the tooltip content by default */
+    [data-tooltip]:before,
+    [data-tooltip]:after {
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    /* Position tooltip above the element */
+    [data-tooltip]:before {
+        position: absolute;
+        bottom: var(--ms-form-tooltip-bottom-position, 115%);
+        left: var(--ms-form-tooltip-left-position, 50%);
+        margin: var(--ms-form-tooltip-margin, 0 0 5px -55px);
+        padding: var(--ms-form-tooltip-padding, 8px 5px);
+        width: var(--ms-form-tooltip-width, 100px);
+        border-radius: var(--ms-form-border-radius, 3px);
+        background-color: var(--ms-form-tooltip-background-color, #0cc39f);
+        color: var(--ms-form-tooltip-color, #fff);
+        content: attr(data-tooltip);
+        text-align: var(--ms-form-tooltip-text-align, center);
+        font-size: var(--ms-form-tooltip-font-size, 14px);
+        line-height: var(--ms-form-tooltip-line-height, 1.2);
+    }
+    
+    /* Triangle hack to make tooltip look like a speech bubble */
+    [data-tooltip]:after {
+        position: absolute;
+        bottom: 115%;
+        left: 50%;
+        margin-left: -5px;
+        width: 0;
+        border-top: 5px solid var(--ms-form-tooltip-background-color, #0cc39f);
+        border-right: 5px solid transparent;
+        border-left: 5px solid transparent;
+        content: " ";
+        font-size: 0;
+        line-height: 0;
+    }
+    
+    /* Show tooltip content on hover */
+    [data-tooltip]:hover:before,
+    [data-tooltip]:hover:after {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+@media screen and (min-width: 768px) {
+    ms-form {
+        .ms-form {
+            .ms-form__stages {
+                div > label {
+                    border: solid 4px var(--ms-form-label-border-color, #c0c0c0);              
+                    height: 40px;
+                    line-height: 40px;
+                    width: 40px;
+                }
+            }
+
+            .ms-form__progress {
+                height: 4px;
+                transform: translateY(-1.70em);
+                > div {
+                    height: 4px;
+                }
+            }
+        }
+    }
+
+}
