@@ -303,4 +303,8 @@ export class MsForm {
             }
         });       
     }
+
+    componentDidUpdate() {
+        this.translationService && this.translationService.bind('ms-form');
+    }
 }
