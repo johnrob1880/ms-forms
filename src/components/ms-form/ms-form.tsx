@@ -238,7 +238,7 @@ export class MsForm {
                 return this.translationService.translate(str, fallback);
             }
             // inject translator
-            this.panelCache.forEach( panel => {
+            (this.panelCache || []).forEach( panel => {
                 panel.translator = t;
             })
             
@@ -250,8 +250,6 @@ export class MsForm {
         this.panelCache = Array.from(this.el.querySelectorAll('ms-form-step')).map(c => c as any).map(c => c as HTMLMsFormStepElement);
         this.resultsCache = Array.from(this.el.querySelectorAll('ms-form-result')).map(c => c as any).map(c => c as HTMLMsFormResultElement);
         
-        
-
         let n = Array.from(Array(this.steps).keys());
         n.forEach( i => {
             this.stepValidations[i] = `ǃ`;

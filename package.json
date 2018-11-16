@@ -1,6 +1,6 @@
 {
   "name": "ms-forms",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Multi-step form components",
   "module": "dist/esm/index.js",
   "main": "dist/index.js",
@@ -14,7 +14,7 @@
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "dependencies": {
     "form-serialize": "^0.7.2"
