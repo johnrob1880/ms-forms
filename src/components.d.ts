@@ -41,13 +41,15 @@ export namespace Components {
 
   interface MsFormStep {
     'heading': string;
+    'headingKey': string;
     'renderFunc': (values) => void;
     'renderSettingsFunc': (settings, actions) => void;
     'settings': any;
     'settingsIcon': string;
     'show': boolean;
     'step': number;
-    'translate': string;
+    'tooltip': string;
+    'tooltipKey': string;
     'translator': (str:string, fallback?:string) => string;
     'validate': () => Promise<{}>;
     'validates': () => Promise<boolean>;
@@ -55,13 +57,15 @@ export namespace Components {
   }
   interface MsFormStepAttributes extends StencilHTMLAttributes {
     'heading'?: string;
+    'headingKey'?: string;
     'renderFunc'?: (values) => void;
     'renderSettingsFunc'?: (settings, actions) => void;
     'settings'?: any;
     'settingsIcon'?: string;
     'show'?: boolean;
     'step'?: number;
-    'translate'?: string;
+    'tooltip'?: string;
+    'tooltipKey'?: string;
     'translator'?: (str:string, fallback?:string) => string;
     'values'?: {};
   }

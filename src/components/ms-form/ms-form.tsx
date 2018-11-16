@@ -156,14 +156,14 @@ export class MsForm {
     private getTooltip(step) {
         let panel = this.panelCache && this.panelCache[step - 1];        
         if (!panel) { return '' }
-        let text = panel.heading || `Step ${step}`;
-        return panel.translate && this.translate(panel.translate, text) || text;
+        let text = panel.tooltip || panel.heading || `Step ${step}`;
+        return panel.tooltipKey && this.translate(panel.tooltipKey, text) || text;
     }
 
     private getTooltipKey(step) {
         let panel = this.panelCache && this.panelCache[step - 1];        
         if (!panel) { return '' }
-        return panel.translate || '';
+        return panel.tooltipKey || '';
     }
 
 

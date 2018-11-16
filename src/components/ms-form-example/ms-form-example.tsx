@@ -22,20 +22,20 @@ export class MsFormExample {
                     <p data-ms-translate="form.description" class="ms-description">An example multi-step form with language support.</p>
                     </div>
                     <div slot="steps">
-                    <ms-form-step step={1} heading="Firstname" translate="firstname"
+                    <ms-form-step step={1} heading="Firstname" headingKey="firstname" tooltipKey="firstname.tooltip"
                         settings={this.settings} renderSettingsFunc={this.renderSettings.bind(this)}>
                         <input data-ms-translation-scope="firstname" type="text" name="firstname" required minlength="3" />                        
                     </ms-form-step>
-                    <ms-form-step step={2} heading="Lastname" translate="lastname">
+                    <ms-form-step step={2} heading="Lastname" headingKey="lastname">
                         <input type="text" name="lastname"  required />
                     </ms-form-step>
-                    <ms-form-step step={3} heading="Email" translate="email">
+                    <ms-form-step step={3} heading="Email" headingKey="email">
                         <input type="email" name="email" required />
                     </ms-form-step>
-                    <ms-form-step step={4} heading="Age" translate="age">
+                    <ms-form-step step={4} heading="Age" headingKey="age">
                         <input type="number" name="age" min="1" max="130" required />
                     </ms-form-step>
-                    <ms-form-step step={5} heading="Comments" translate="comments">
+                    <ms-form-step step={5} heading="Comments" headingKey="comments">
                         <textarea name="comments"></textarea> 
                     </ms-form-step>
                     </div>

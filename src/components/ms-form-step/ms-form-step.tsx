@@ -10,7 +10,9 @@ export class MsFormStep {
     @Element() el: HTMLElement
     @Prop() step: number
     @Prop() heading: string
-    @Prop() translate: string
+    @Prop() tooltip: string
+    @Prop() tooltipKey: string
+    @Prop() headingKey: string
     @Prop() show: boolean
     @Prop() settings: any
     @Prop() settingsIcon: string = "⚙"
@@ -65,6 +67,11 @@ export class MsFormStep {
         e.preventDefault();
         console.log('click', this.settingsVisible, this.renderSettingsFunc); 
         this.settingsVisible = !this.settingsVisible
+    }
+
+    @Watch('headingKey') 
+    handleHeadingKeyValue(newValue: string) {
+        this.headingEl.dataset['msTranslate'] = newValue;
     }
 
     @Watch('translator') 
@@ -145,8 +152,8 @@ export class MsFormStep {
         this.formValues = this.values || {};
         this.stepSettings = {...this.settings};
 
-        if (this.translate) {
-            this.headingEl.dataset['msTranslate'] = this.translate;
+        if (this.headingKey) {
+            this.headingEl.dataset['msTranslate'] = this.headingKey;
         }
     }
 }
