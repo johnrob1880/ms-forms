@@ -12,6 +12,9 @@ export class MsFormStep {
     @Prop() heading: string
     @Prop() translate: string
     @Prop() show: boolean
+    @Prop() settings: any
+    @Prop() settingsIcon: string = "⚙"
+    @Prop() renderSettingsFunc: (settings, actions) => void
     @Prop() renderFunc: (values) => void
     @Prop({mutable: true}) translator: (str:string, fallback?:string) => string
     @State() visible: boolean
@@ -20,12 +23,36 @@ export class MsFormStep {
     @Prop() values: {}
     @State() validationMessages: any = {}
     @State() translationKey: string
+    @State() settingsVisible: boolean = false
+    @State() stepSettings: any
     headingEl: HTMLElement
 
+    shouldRenderSettings() {
+        return !!(Object.keys(this.stepSettings || {}).length && this.renderSettingsFunc);
+    }
+
+
     render() {
+        let settingsActions = {
+            set: (name, val) => {
+                this.settings = {...this.settings, ...{[name]: val}};
+                console.log('setting set', this.settings);
+            },
+            close: (e:UIEvent) => {
+                e.preventDefault();
+                this.settingsVisible = false;
+            }
+        }
+
+        
         return (
             <div class={`ms-form__panel${this.visible && ' ms-show' || ''}`} data-panel={`step${this.step}`}>
-                <h4 ref={c => this.headingEl = c as HTMLElement}>{this.heading}</h4>
+                <h4><span ref={c => this.headingEl = c as HTMLElement}>{this.heading}</span>
+                    {this.shouldRenderSettings() && <a data-tooltip="Settings" data-tooltip-position="left" data-tooltip-key="settings" href="javascript: void(0);" onClick={this.handleSettingsClick.bind(this)} class="ms-form__panel__settings-icon">{this.settingsIcon}</a>}
+                </h4>
+                {this.shouldRenderSettings() && <div style={{display: this.settingsVisible ? 'block' : 'none'}} class="ms-form__panel_settings">
+                    {this.renderSettingsFunc(this.stepSettings, settingsActions)}
+                </div>}
                 { this.renderFunc && this.renderFunc(this.formValues) }
                 <slot></slot>
                 {Object.keys(this.validationMessages).map(key => 
@@ -34,9 +61,20 @@ export class MsFormStep {
         );
     }
 
+    handleSettingsClick(e:UIEvent) {
+        e.preventDefault();
+        console.log('click', this.settingsVisible, this.renderSettingsFunc); 
+        this.settingsVisible = !this.settingsVisible
+    }
+
     @Watch('translator') 
     handleTranslator(newValue: any) {
         this.translator = newValue;
+    }
+
+    @Watch('settings') 
+    handleSettings(newSettings: any) {
+        this.stepSettings = {...newSettings};
     }
 
     @Watch('values')
@@ -105,6 +143,7 @@ export class MsFormStep {
         this.visible = this.show;
         this.isValid = false;
         this.formValues = this.values || {};
+        this.stepSettings = {...this.settings};
 
         if (this.translate) {
             this.headingEl.dataset['msTranslate'] = this.translate;

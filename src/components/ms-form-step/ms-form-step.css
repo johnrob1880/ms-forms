@@ -4,3 +4,8 @@ ms-form-step .ms-form__panel {
 ms-form-step .ms-form__panel.ms-show {
     display: block;
 }
+ms-form-step a.ms-form__panel__settings-icon {
+    text-decoration: none;
+    color: var(--ms-form-panel-icon-color, #999999);
+    float: right;
+}

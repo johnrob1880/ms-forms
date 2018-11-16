@@ -42,6 +42,9 @@ export namespace Components {
   interface MsFormStep {
     'heading': string;
     'renderFunc': (values) => void;
+    'renderSettingsFunc': (settings, actions) => void;
+    'settings': any;
+    'settingsIcon': string;
     'show': boolean;
     'step': number;
     'translate': string;
@@ -53,6 +56,9 @@ export namespace Components {
   interface MsFormStepAttributes extends StencilHTMLAttributes {
     'heading'?: string;
     'renderFunc'?: (values) => void;
+    'renderSettingsFunc'?: (settings, actions) => void;
+    'settings'?: any;
+    'settingsIcon'?: string;
     'show'?: boolean;
     'step'?: number;
     'translate'?: string;
@@ -66,6 +72,7 @@ export namespace Components {
     'heading': string;
     'id': string;
     'nextText': string;
+    'settings': any;
     'steps': number;
     'visibleOnResults': boolean;
   }
@@ -75,6 +82,7 @@ export namespace Components {
     'heading'?: string;
     'id'?: string;
     'nextText'?: string;
+    'settings'?: any;
     'steps'?: number;
     'visibleOnResults'?: boolean;
   }
@@ -88,6 +96,7 @@ export namespace Components {
     'languageResourcesUrl': string;
     'loadLanguage': (url: string) => void;
     'scope': string;
+    'serviceRef': (obj:TranslationServiceInterface) => void;
   }
   interface MsLanguageAttributes extends StencilHTMLAttributes {
     'autoDetect'?: boolean;
@@ -95,6 +104,7 @@ export namespace Components {
     'definitionJson'?: string;
     'languageResourcesUrl'?: string;
     'scope'?: string;
+    'serviceRef'?: (obj:TranslationServiceInterface) => void;
   }
 
   interface MsTranslate {

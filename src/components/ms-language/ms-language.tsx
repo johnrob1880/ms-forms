@@ -11,6 +11,7 @@ export class MsLanguage {
     @Prop() definitionJson: string
     @Prop() definition: TranslationSet
     @Prop() scope: string = 'body'
+    @Prop() serviceRef: (obj:TranslationServiceInterface) => void
     @State() injected: boolean
     
     @Prop({connect: 'ms-translate'}) injector: TranslationServiceInjectorInterface
@@ -72,6 +73,10 @@ export class MsLanguage {
                 this.handleDefinition(this.definition);
             } else if (this.definitionJson) {
                 this.handleJson(this.definitionJson);
+            }
+
+            if (this.serviceRef) {
+                this.serviceRef(this.translationService)
             }
 
             this.injected = true;

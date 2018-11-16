@@ -23,6 +23,7 @@ export class MsForm {
     @Prop() backText: string = "🠨 Back"
     @Prop() nextText: string = "Next 🠪"
     @Prop() visibleOnResults: boolean = true
+    @Prop() settings: any
 
     @Prop({connect: 'ms-translate'}) injector: TranslationServiceInjectorInterface
     
@@ -30,6 +31,7 @@ export class MsForm {
     @State() finished: boolean
     @State() canComplete: boolean
     @State() injected: boolean
+    @State() formSettings: any
     formEl: HTMLFormElement
     panelCache: HTMLMsFormStepElement[];
     resultsCache: HTMLMsFormResultElement[];
@@ -230,6 +232,9 @@ export class MsForm {
     }
 
     componentWillLoad() {
+
+        this.formSettings = this.settings
+
         this.injector.create().then(translationService => {
             this.translationService = translationService;
             this.translationService.bind('body');
