@@ -9,11 +9,12 @@ ms-form {
 
         .ms-form__header {
             padding: var(--ms-form-header-padding, 10px);
-            border: var(--ms-form-header-border-size, 3px) var(--ms-form-header-border-style, solid) var(--ms-form-header-border-color, #dcdcdc);
-            background-color: var(--ms-form-header-background-color, #f1f1f1);
+            border: var(--ms-form-header-border-size, 3px) var(--ms-form-header-border-style, solid) var(--ms-form-header-border-color, #B3B3B3);
+            background-color: var(--ms-form-header-background-color, #ebebeb);
             margin: var(--ms-form-header-margin, 0 0 20px 0);
             border-radius: var(--ms-form-header-border-radius, 4px);
         }
+        
         .ms-form__stages {
             display: flex;
             flex-direction: row;
@@ -175,10 +176,29 @@ ms-form {
             color: var(--ms-form-success-text-color, #ffffff);
         }
 
-        .ms-form__stages label[for].ms-complete.ms-errors {
-            background-color: var(--ms-form-error-background-color, #FFEBEB);
-            color: var(--ms-form-error-text-color, #EB0000);
-            border-color: var(--ms-form-error-border-color, #EB0000);
+        .ms-form__stages label[for].ms-complete.ms-errors,
+         {
+            position: relative;
+            // background-color: var(--ms-form-error-background-color, #FFEBEB);
+            // color: var(--ms-form-error-text-color, #EB0000);
+            // border-color: var(--ms-form-error-border-color, #EB0000);
+
+            &:after {
+                content: '!';
+                font-size: .7em;
+                font-weight: 900;
+                position: absolute;
+                top: -10px;
+                left: 50%;
+                z-index: 3;
+                color: var(--ms-form-error-border-color, #EB0000);
+                background-color: var(--ms-form-error-background-color, #FFEBEB);
+                border-radius: 50%;
+                width: 15px;
+                height: 15px;
+                line-height: 15px;
+                border: 2px solid var(--ms-form-error-border-color, #EB0000);
+            }
         }
         
         input[type=text],

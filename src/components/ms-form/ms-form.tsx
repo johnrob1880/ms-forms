@@ -185,7 +185,7 @@ export class MsForm {
                     <slot name="header"></slot>
                     {n.map(step => <input type="radio" data-steps={this.steps} data-step={step + 1} id={`step${step + 1}`} name="__ms_stage" checked={step + 1 === this.activeStep} onClick={this.setActive.bind(this, step + 1)} />)}
                     <div class="ms-form__stages">
-                        {n.map(step => <div><label data-tooltip-key={this.getTooltipKey.call(this, step + 1)} data-tooltip={this.getTooltip.call(this, step + 1)} class={this.getStepClassMap(step + 1)} htmlFor={`step${step + 1}`}>{this.getStepLabel(step + 1)}</label></div>)}
+                        {n.map(step => <div data-tooltip-key={this.getTooltipKey.call(this, step + 1)} data-tooltip={this.getTooltip.call(this, step + 1)}><label class={this.getStepClassMap(step + 1)} htmlFor={`step${step + 1}`}>{this.getStepLabel(step + 1)}</label></div>)}
                     </div>
                     <div class="ms-form__progress"><div></div></div>
                     <div class="ms-form__panels">
