@@ -16,6 +16,7 @@ const without = (values, name) => {
 export class MsForm {
 
     @Element() el: Element;
+    @Prop() name: string
     @Prop() id: string
     @Prop() heading: string
     @Prop() steps: number
@@ -28,6 +29,7 @@ export class MsForm {
     @Prop({connect: 'ms-translate'}) injector: TranslationServiceInjectorInterface
     
     @State() activeStep: number = 0
+    @State() maxStep: number = 0
     @State() finished: boolean
     @State() canComplete: boolean
     @State() injected: boolean
@@ -37,6 +39,7 @@ export class MsForm {
     resultsCache: HTMLMsFormResultElement[];
     stepValidations: any = {}
     private translationService: TranslationServiceInterface
+    private formName: string
 
     async setActive(step) {
         if (this.finished) {
@@ -46,10 +49,14 @@ export class MsForm {
             })
         } else if (step === this.activeStep) return;  
 
-        let visitedPanels = this.canComplete ? [...this.panelCache] : this.panelCache.filter(panel => panel.step <= this.activeStep) || [];
+        let visitedPanels = this.canComplete ? [...this.panelCache] : this.panelCache.filter(panel => panel.step <= this.maxStep) || [];
 
         const move = () => {
             this.activeStep = step;
+
+            if (step > this.maxStep) {
+                this.maxStep = step;
+            }
 
             if (this.activeStep === this.steps) {
                 this.canComplete = true;
@@ -180,7 +187,7 @@ export class MsForm {
         }
 
         return (
-            <form ref={c => this.formEl = c as HTMLFormElement} class="ms-form" style={styles} novalidate>
+            <form name={this.name} ref={c => this.formEl = c as HTMLFormElement} class="ms-form" style={styles} novalidate>
                 <div style={{display: this.finished ? (this.visibleOnResults ? 'block' : 'none') : 'block'}}>
                     <slot name="header"></slot>
                     {n.map(step => <input type="radio" data-steps={this.steps} data-step={step + 1} id={`step${step + 1}`} name="__ms_stage" checked={step + 1 === this.activeStep} onClick={this.setActive.bind(this, step + 1)} />)}
@@ -252,9 +259,16 @@ export class MsForm {
     }
     
     componentDidLoad() {
+        this.formName = this.name || `msForm${document.querySelectorAll('ms-form').length + 1}`;
+
         this.panelCache = Array.from(this.el.querySelectorAll('ms-form-step')).map(c => c as any).map(c => c as HTMLMsFormStepElement);
         this.resultsCache = Array.from(this.el.querySelectorAll('ms-form-result')).map(c => c as any).map(c => c as HTMLMsFormResultElement);
-        
+
+        // inject form name into each step
+        this.panelCache.forEach(panel => {
+            panel.form = this.formName;
+        })
+
         let n = Array.from(Array(this.steps).keys());
         n.forEach( i => {
             this.stepValidations[i] = `ǃ`;

@@ -98,7 +98,6 @@ export class MsLanguage {
 
         if (this.autoDetect) {
             this.languageKey = (window.navigator as any).userLanguage || window.navigator.language;
-            console.log('language', this.languageKey);
             this.loadLanguage(`${this.languageResourcesUrl}/${this.languageKey}.json`);
         }
     }

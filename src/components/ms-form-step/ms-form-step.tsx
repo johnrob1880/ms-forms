@@ -1,5 +1,6 @@
 import { Component, Element, Prop, State, Watch, Method } from '@stencil/core';
-
+import { FieldInvalidatorInterface } from '../../common/interfaces';
+import serialize from 'form-serialize';
 
 @Component({
     tag: 'ms-form-step',
@@ -8,6 +9,7 @@ import { Component, Element, Prop, State, Watch, Method } from '@stencil/core';
 export class MsFormStep {
 
     @Element() el: HTMLElement
+    @Prop() form: string
     @Prop() step: number
     @Prop() heading: string
     @Prop() tooltip: string
@@ -21,13 +23,15 @@ export class MsFormStep {
     @Prop({mutable: true}) translator: (str:string, fallback?:string) => string
     @State() visible: boolean
     @State() isValid: boolean
-    @State() formValues: any = {}
+    @State() formValues: any = {}    
     @Prop() values: {}
+    @Prop() validateFunc: (values: any, invalidator: FieldInvalidatorInterface) => boolean
     @State() validationMessages: any = {}
     @State() translationKey: string
     @State() settingsVisible: boolean = false
     @State() stepSettings: any
     headingEl: HTMLElement
+    private formName: string
 
     shouldRenderSettings() {
         return !!(Object.keys(this.stepSettings || {}).length && this.renderSettingsFunc);
@@ -38,7 +42,6 @@ export class MsFormStep {
         let settingsActions = {
             set: (name, val) => {
                 this.settings = {...this.settings, ...{[name]: val}};
-                console.log('setting set', this.settings);
             },
             close: (e:UIEvent) => {
                 e.preventDefault();
@@ -65,7 +68,6 @@ export class MsFormStep {
 
     handleSettingsClick(e:UIEvent) {
         e.preventDefault();
-        console.log('click', this.settingsVisible, this.renderSettingsFunc); 
         this.settingsVisible = !this.settingsVisible
     }
 
@@ -94,6 +96,11 @@ export class MsFormStep {
         this.visible = newValue;
     }
 
+    @Watch('form')
+    handleForm(name: string) {
+        this.formName = name;
+    }
+
     @Method()
     async validates() {
         return Promise.resolve(this.isValid);
@@ -103,15 +110,36 @@ export class MsFormStep {
     async validate() {
         this.isValid = true;
         this.translationKey = '';
+        this.el.classList.remove('ms-has-errors');
 
         return new Promise((resolve) => {
             let inputs = Array.from(this.el.querySelectorAll('input, select, textarea'));
             this.validationMessages = {};
+
+            if (this.validateFunc) {
+                console.log('validate el', this.el.parentNode, serialize);
+                
+                let values = serialize(document.forms[this.formName], { hash: true, empty: true});
+
+                if (!this.validateFunc(values, { 
+                    invalidate: (field: HTMLInputElement, messageOrKey: string) => {
+
+                        field.setCustomValidity(this.translator(messageOrKey, messageOrKey || 'This field is invalid.'));                        
+                    },
+                    validate: (field: HTMLInputElement) => {
+                        field.setCustomValidity('');
+                    }
+                })) {
+                    this.isValid = false;
+                }
+            }
+
             inputs.forEach(inp => {
                 let input = inp as HTMLInputElement;
                 
                 if ('checkValidity' in input && !input.checkValidity()) {
                     this.isValid = false;
+                    this.el.classList.add('ms-has-errors');
 
                     if (!this.translator) {
                         this.validationMessages['default'] = input.validationMessage;
@@ -130,18 +158,23 @@ export class MsFormStep {
                                     message = this.translator(messageKey) || message;
                                 }
 
+                                if (input.dataset['msCustomError']) {
+                                    messageKey = messageKey.replace('customError', input.dataset['msCustomError']);
+                                }
+
                                 this.validationMessages[messageKey] = message;
                             }
                         }
                    }
                 }            
             });
+
             if (Object.keys(this.validationMessages || {}).length) {
                 Array.from(this.el.querySelectorAll('input, select, textarea')).forEach( ctrl => {
                     ctrl.classList.add('ms-touched');
-                });
-                
+                });                
             }
+
             resolve({step: this.step, valid: this.isValid, messages: {...this.validationMessages} });
         })
     }
@@ -151,6 +184,7 @@ export class MsFormStep {
         this.isValid = false;
         this.formValues = this.values || {};
         this.stepSettings = {...this.settings};
+        this.formName = this.form;
 
         if (this.headingKey) {
             this.headingEl.dataset['msTranslate'] = this.headingKey;

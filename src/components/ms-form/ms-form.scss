@@ -60,17 +60,7 @@ ms-form {
 
             p {
                 margin: var(--ms-form-paragaraph-margin, 10px 0);
-            }
-            /**
-            * If a required input has been touched and is valid, it should be white.
-            */
-            .ms-touched:required:valid {
-                border-color: inherit;
-            }
-            
-            .ms-touched:required:invalid {
-                border-color: var(--ms-form-error-border-color, #EB0000);
-            }            
+            }                       
         }
 
         .ms-form__panels__actions {
@@ -222,6 +212,13 @@ ms-form {
         input:-webkit-autofill {
             -webkit-box-shadow: 0 0 0 30px white inset;
         }
+
+        ms-form-step.ms-has-errors input.ms-touched:invalid,
+        ms-form-step.ms-has-errors select.ms-touched:invalid,
+        ms-form-step.ms-has-errors textarea.ms-touched:invalid, {
+            border-color: var(--ms-form-error-border-color, #EB0000);
+        } 
+
                 
         button {
             color: var(--ms-form-button-default-color, #4D4D4D);

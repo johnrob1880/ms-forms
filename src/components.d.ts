@@ -9,6 +9,7 @@ import '@stencil/core';
 
 
 import {
+  FieldInvalidatorInterface,
   TranslationServiceInterface,
   TranslationSet,
 } from './common/interfaces';
@@ -40,6 +41,7 @@ export namespace Components {
   }
 
   interface MsFormStep {
+    'form': string;
     'heading': string;
     'headingKey': string;
     'renderFunc': (values) => void;
@@ -52,10 +54,12 @@ export namespace Components {
     'tooltipKey': string;
     'translator': (str:string, fallback?:string) => string;
     'validate': () => Promise<{}>;
+    'validateFunc': (values: any, invalidator: FieldInvalidatorInterface) => boolean;
     'validates': () => Promise<boolean>;
     'values': {};
   }
   interface MsFormStepAttributes extends StencilHTMLAttributes {
+    'form'?: string;
     'heading'?: string;
     'headingKey'?: string;
     'renderFunc'?: (values) => void;
@@ -67,6 +71,7 @@ export namespace Components {
     'tooltip'?: string;
     'tooltipKey'?: string;
     'translator'?: (str:string, fallback?:string) => string;
+    'validateFunc'?: (values: any, invalidator: FieldInvalidatorInterface) => boolean;
     'values'?: {};
   }
 
@@ -75,6 +80,7 @@ export namespace Components {
     'finishText': string;
     'heading': string;
     'id': string;
+    'name': string;
     'nextText': string;
     'settings': any;
     'steps': number;
@@ -85,6 +91,7 @@ export namespace Components {
     'finishText'?: string;
     'heading'?: string;
     'id'?: string;
+    'name'?: string;
     'nextText'?: string;
     'settings'?: any;
     'steps'?: number;

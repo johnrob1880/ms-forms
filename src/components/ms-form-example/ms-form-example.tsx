@@ -16,7 +16,7 @@ export class MsFormExample {
 
         return (
             <ms-language autoDetect={true} serviceRef={c => this.translate = c as TranslationServiceInterface}>
-                <ms-form steps={5}>
+                <ms-form steps={5} name="exampleForm">
                     <div class="ms-form__header" slot="header">
                     <h2 data-ms-translate="form.title">Multistep Form Example</h2>
                     <p data-ms-translate="form.description" class="ms-description">An example multi-step form with language support.</p>
@@ -26,8 +26,22 @@ export class MsFormExample {
                         settings={this.settings} renderSettingsFunc={this.renderSettings.bind(this)}>
                         <input data-ms-translation-scope="firstname" type="text" name="firstname" required minlength="3" />                        
                     </ms-form-step>
-                    <ms-form-step step={2} heading="Lastname" headingKey="lastname">
-                        <input type="text" name="lastname"  required />
+                    <ms-form-step step={2} heading="Lastname" headingKey="lastname"
+                        validateFunc={(values, invalidator) => {
+                            console.log('invalidate values', values);
+                            if (values.firstname === 'Donald' && values.lastname === 'Trump') {
+                                invalidator.invalidate(
+                                    document.querySelector('[name="lastname"]'), 
+                                    'validity.lastname.trumpNotAllowed', 
+                                    'Firstname cannot be Donald when lastname is Trump. Only Ivanka is allowed!'
+                                    );
+                                return false;
+                            } else {
+                                invalidator.validate(document.querySelector('[name="lastname"]'));
+                            }
+                            return true;
+                        }}>
+                        <input type="text" name="lastname" data-ms-translation-scope="lastname" data-ms-custom-error="trumpNotAllowed" required />
                     </ms-form-step>
                     <ms-form-step step={3} heading="Email" headingKey="email">
                         <input type="email" name="email" required />

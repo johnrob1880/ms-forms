@@ -14,5 +14,6 @@
     "actions.start-over": "Start Over ⟳",
     "validity.valueMissing": "Please fill out this field.",
     "validity.typeMismatch": "The input does not meet the correct type",
-    "validity.typeMismatch.email": "Please include an '@' in the email address."
+    "validity.typeMismatch.email": "Please include an '@' in the email address.",
+    "validity.lastname.trumpNotAllowed": "Lastname cannot be Trump when firstname is Donald."
 }
